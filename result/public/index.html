@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Resultados</title>
+<style>
+ body{font-family:Arial,sans-serif;background:#f4f6f8;text-align:center;padding:40px}
+ h1{color:#1d3557} .box{display:inline-block;background:#fff;padding:30px 40px;border-radius:12px;box-shadow:0 2px 8px #0002;min-width:380px}
+ .row{margin:18px 0;text-align:left} .bar{height:28px;border-radius:6px;background:#2a9d8f;color:#fff;padding:2px 8px;box-sizing:border-box;min-width:28px;transition:width .4s}
+ .row:nth-child(even) .bar{background:#e76f51}
+</style></head><body><div class="box">
+<h1>Resultados de la votación</h1>
+<div id="out">Cargando…</div>
+<p id="total"></p>
+</div>
+<script>
+async function load(){
+  try{
+    const data = await (await fetch("/api/results")).json();
+    const total = data.reduce((s,r)=>s+r.total,0);
+    document.getElementById("out").innerHTML = data.map(r=>{
+      const pct = total ? Math.round(r.total*100/total) : 0;
+      return `<div class="row"><b>${r.vote}</b> — ${r.total} (${pct}%)
+              <div class="bar" style="width:${pct}%">${pct}%</div></div>`;
+    }).join("") || "Aún no hay votos.";
+    document.getElementById("total").textContent = "Total de votos: " + total;
+  }catch(e){ document.getElementById("out").textContent = "Error consultando resultados"; }
+}
+load(); setInterval(load, 2000);
+</script></body></html>
