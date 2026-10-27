@@ -18,7 +18,7 @@ App de votación "Docker Compose vs Kubernetes" con 6 contenedores:
 
 ## Ejecución
 ```
-cp .env.example .env      # (Windows: copy .env.example .env) y edite los valores
+copy .env.example .env      # (editar DOCKERHUB_USER y POSTGRES_PASSWORD)
 docker compose up -d --build
 ```
 - Votar: http://localhost:5000
@@ -36,4 +36,8 @@ docker compose down        # conserva los volúmenes
 docker compose down -v     # borra también los datos
 ```
 ## Autores
-(nombres de los integrantes del grupo)
+Ana Sofia Vergara
+Paula Daniela Cubillos
+Sebastián González
+Carlos Villanueva
+
